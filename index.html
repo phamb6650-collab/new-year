@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm Ngược Năm Mới</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Canvas cho pháo hoa -->
+    <canvas id="fireworks"></canvas>
+
+    <!-- Khung viền trang trí -->
+    <div class="asian-frame"></div>
+
+    <!-- Nút điều khiển nhạc -->
+    <button id="music-toggle" class="music-btn">🔇 Bật nhạc</button>
+
+    <!-- Nút Game Bầu Cua -->
+    <button id="game-toggle" class="game-btn">🎮 Bầu Cua</button>
+
+    <!-- Nút Game Lô Tô -->
+    <button id="loto-toggle" class="game-btn" style="top: 80px;">🎱 Lô Tô</button>
+
+    <!-- Nút Game Hứng Xu -->
+    <button id="catch-coin-toggle" class="game-btn" style="top: 140px;">💰 Hứng Xu</button>
+
+    <!-- Nút Xin Xăm -->
+    <button id="xin-xam-toggle" class="game-btn" style="top: 80px; left: auto; right: 20px;">🙏 Xin Xăm</button>
+
+    <!-- Nút Thả Đèn Trời -->
+    <button id="lantern-toggle" class="game-btn" style="top: 140px; left: auto; right: 20px;">🏮 Thả Đèn</button>
+
+    <!-- Các element trang trí Tết -->
+    <div class="decor-container">
+        <!-- Bao lì xì treo -->
+        <div class="lixi-row">
+            <div class="lixi" style="animation-delay: 0s;"></div>
+            <div class="lixi" style="animation-delay: 1s;"></div>
+            <div class="lixi" style="animation-delay: 0.5s;"></div>
+            <div class="lixi" style="animation-delay: 1.5s;"></div>
+        </div>
+
+        <!-- Bánh chưng, Bánh tét -->
+        <img src="banh-chung.png" class="banh-chung" alt="Bánh Chưng">
+        <img src="banh-tet.png" class="banh-tet" alt="Bánh Tét">
+
+        <!-- Đèn lồng -->
+        <div class="lantern left">
+            <div class="lantern-body"><span class="lantern-text">An</span></div>
+            <div class="lantern-tassel"></div>
+        </div>
+        <div class="lantern right">
+            <div class="lantern-body"><span class="lantern-text">Khang</span></div>
+            <div class="lantern-tassel"></div>
+        </div>
+
+        <!-- Câu đối -->
+        <div class="couplet left">
+            Cung<br>Chúc<br>Tân<br>Xuân
+        </div>
+        <div class="couplet right">
+            Vạn<br>Sự<br>Như<br>Ý
+        </div>
+
+        <!-- Ảnh Hoa Mai To ở dưới -->
+        <img src="hoa-mai-to.png" class="big-flower-bottom" alt="Hoa Mai Lớn">
+
+        <!-- Lì xì trên cây (Hái Lộc) -->
+        <!-- Tầng thấp (Rộng) -->
+        <div class="lixi-tree" style="bottom: 120px; left: calc(50% - 300px); animation-delay: 0.1s;"></div>
+        <div class="lixi-tree" style="bottom: 140px; left: calc(50% - 150px); animation-delay: 0.3s;"></div>
+        <div class="lixi-tree" style="bottom: 130px; left: calc(50% + 160px); animation-delay: 0.5s;"></div>
+        <div class="lixi-tree" style="bottom: 150px; left: calc(50% + 280px); animation-delay: 0.7s;"></div>
+        <div class="lixi-tree" style="bottom: 180px; left: calc(50% - 220px); animation-delay: 0.9s;"></div>
+        <div class="lixi-tree" style="bottom: 190px; left: calc(50% + 80px); animation-delay: 1.1s;"></div>
+        
+        <!-- Tầng giữa -->
+        <div class="lixi-tree" style="bottom: 240px; left: calc(50% - 250px); animation-delay: 0.2s;"></div>
+        <div class="lixi-tree" style="bottom: 260px; left: calc(50% - 80px); animation-delay: 0.4s;"></div>
+        <div class="lixi-tree" style="bottom: 250px; left: calc(50% + 120px); animation-delay: 0.6s;"></div>
+        <div class="lixi-tree" style="bottom: 280px; left: calc(50% + 240px); animation-delay: 0.8s;"></div>
+        <div class="lixi-tree" style="bottom: 300px; left: calc(50% - 180px); animation-delay: 1.0s;"></div>
+        <div class="lixi-tree" style="bottom: 320px; left: calc(50% + 40px); animation-delay: 1.2s;"></div>
+
+        <!-- Tầng cao (Hẹp dần) -->
+        <div class="lixi-tree" style="bottom: 380px; left: calc(50% - 100px); animation-delay: 0.3s;"></div>
+        <div class="lixi-tree" style="bottom: 400px; left: calc(50% + 100px); animation-delay: 0.5s;"></div>
+        <div class="lixi-tree" style="bottom: 450px; left: calc(50% - 40px); animation-delay: 0.7s;"></div>
+        <div class="lixi-tree" style="bottom: 480px; left: calc(50% + 30px); animation-delay: 0.9s;"></div>
+        <div class="lixi-tree" style="bottom: 520px; left: calc(50% - 10px); animation-delay: 1.3s;"></div>
+    </div>
+
+    <!-- Chữ Phúc Đáo (Ẩn) -->
+    <div id="phuc-dao"><span>福</span></div>
+
+    <!-- Modal Game Bầu Cua -->
+    <div id="game-modal" class="modal-overlay">
+        <div class="game-content">
+            <span class="close-game">&times;</span>
+            <h2 style="color: #ffd700; margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 3rem;">Bầu Cua Tôm Cá</h2>
+            <div class="dice-result">
+                <div class="dice" id="dice1">❓</div>
+                <div class="dice" id="dice2">❓</div>
+                <div class="dice" id="dice3">❓</div>
+            </div>
+            <button id="roll-btn">Xốc Đĩa</button>
+            <div class="board-grid">
+                <div class="board-item" data-id="nai">🦌<br>Nai</div>
+                <div class="board-item" data-id="bau">🍐<br>Bầu</div>
+                <div class="board-item" data-id="ga">🐓<br>Gà</div>
+                <div class="board-item" data-id="ca">🐟<br>Cá</div>
+                <div class="board-item" data-id="cua">🦀<br>Cua</div>
+                <div class="board-item" data-id="tom">🦐<br>Tôm</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Game Lô Tô -->
+    <div id="loto-modal" class="modal-overlay">
+        <div class="game-content" style="max-width: 90%; max-height: 90vh; overflow-y: auto;">
+            <span class="close-game" id="close-loto">&times;</span>
+            <h2 style="color: #ffd700; margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 3rem;">Lô Tô Hội Chợ</h2>
+            
+            <!-- Màn hình cài đặt -->
+            <div id="loto-setup">
+                <p style="color: #fff; font-size: 1.5rem;">Nhập số lượng người chơi:</p>
+                <input type="number" id="loto-player-count" min="1" max="50" value="1" style="padding: 10px; font-size: 1.5rem; border-radius: 10px; border: 2px solid #ffd700; background: rgba(0,0,0,0.5); color: #fff; width: 100px; text-align: center; margin-bottom: 20px;">
+                <br>
+                <button id="start-loto-btn" style="background: linear-gradient(to bottom, #ffd700, #daa520); color: #8b0000; border: 2px solid #fff; padding: 10px 40px; font-size: 1.5rem; border-radius: 30px; cursor: pointer; font-weight: bold;">Bắt Đầu</button>
+            </div>
+
+            <!-- Màn hình chơi game -->
+            <div id="loto-game-area" style="display: none;">
+                <div class="loto-number-display" id="current-loto-number">--</div>
+                
+                <div class="loto-controls">
+                    <button id="draw-loto-btn" class="loto-action-btn">Quay Số</button>
+                    <button id="reset-loto-btn" class="loto-action-btn">Chơi Lại</button>
+                </div>
+
+                <div id="player-boards-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 30px;"></div>
+
+                <h3 style="color: #ffd700; border-top: 1px solid #ffd700; padding-top: 10px;">Bảng Dò Nhà Cái (1-90)</h3>
+                <div class="loto-grid" id="loto-board"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Game Hứng Xu -->
+    <div id="catch-coin-modal" class="modal-overlay">
+        <div class="game-content" style="width: 100%; height: 100%; max-width: none; max-height: none; border: none; border-radius: 0; background: transparent; padding: 0; position: relative; display: block;">
+            <span class="close-game" id="close-catch-coin" style="z-index: 20; position: absolute; top: 10px; right: 20px; color: #fff; text-shadow: 0 0 5px #000;">&times;</span>
+            
+            <div style="position: absolute; top: 20px; left: 0; width: 100%; text-align: center; z-index: 10; pointer-events: none;">
+                <h2 style="color: #ffd700; margin: 0; font-family: 'Dancing Script', cursive; font-size: 3rem; text-shadow: 2px 2px 0 #8b0000;">Hứng Xu Tài Lộc</h2>
+                <div style="font-size: 2rem; color: #fff; margin-top: 5px; text-shadow: 1px 1px 0 #000;">Điểm: <span id="catch-coin-score" style="color: #ffd700; font-weight: bold;">0</span></div>
+            </div>
+            
+            <canvas id="catch-coin-canvas" style="display: block; width: 100%; height: 100%; touch-action: none; background: radial-gradient(#ffd700 1px, transparent 1px) 0 0 / 50px 50px, radial-gradient(circle at center, #8b0000 0%, #1a0000 100%);"></canvas>
+            <div class="loto-controls" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 15;">
+                <button id="start-catch-coin-btn" class="loto-action-btn" style="background: linear-gradient(to bottom, #ffd700, #daa520); color: #8b0000; font-size: 2rem; padding: 15px 50px; box-shadow: 0 0 20px #ffd700;">Bắt Đầu</button>
+            </div>
+            <p style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: #ccc; font-size: 1rem; z-index: 10; pointer-events: none; text-shadow: 1px 1px 0 #000;">Dùng chuột, chạm hoặc phím <b>A / D</b> để di chuyển.</p>
+        </div>
+    </div>
+
+    <!-- Modal Xin Xăm -->
+    <div id="xin-xam-modal" class="modal-overlay">
+        <div class="game-content" style="max-width: 500px;">
+            <span class="close-game" id="close-xin-xam">&times;</span>
+            <h2 style="color: #ffd700; margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 3rem;">Gieo Quẻ Đầu Năm</h2>
+            
+            <div id="xam-container" class="xam-container">
+                <div class="xam-holder">
+                    <div class="xam-stick"></div>
+                    <div class="xam-stick"></div>
+                    <div class="xam-stick"></div>
+                    <div class="xam-stick"></div>
+                    <div class="xam-stick"></div>
+                </div>
+                <div class="xam-body">
+                    <span>Lộc</span>
+                </div>
+            </div>
+
+            <div id="xam-result" class="xam-result" style="display: none;">
+                <h3 id="xam-title" style="color: #d90429; margin: 0; font-size: 2rem; font-family: 'Dancing Script', cursive;">Quẻ Số 1</h3>
+                <p id="xam-content" style="font-size: 1.2rem; color: #333; margin-top: 10px;">Lời bàn...</p>
+            </div>
+
+            <div class="loto-controls" style="margin-top: 20px;">
+                <button id="shake-xam-btn" class="loto-action-btn" style="background: linear-gradient(to bottom, #ffd700, #daa520); color: #8b0000;">Gieo Quẻ</button>
+            </div>
+            <p style="color: #ccc; font-size: 0.9rem; margin-top: 10px;">Thành tâm khấn nguyện rồi bấm Gieo Quẻ</p>
+        </div>
+    </div>
+
+    <!-- Modal Thả Đèn Trời -->
+    <div id="lantern-modal" class="modal-overlay">
+        <div class="game-content" style="max-width: 400px;">
+            <span class="close-game" id="close-lantern">&times;</span>
+            <h2 style="color: #ffd700; margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 2.5rem;">Thả Đèn Cầu Nguyện</h2>
+            
+            <input type="text" id="wish-name" placeholder="Tên của bạn..." style="width: 80%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none; font-family: 'Times New Roman', serif; font-size: 1.1rem;">
+            <textarea id="wish-content" placeholder="Lời ước nguyện..." rows="3" style="width: 80%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: none; font-family: 'Times New Roman', serif; font-size: 1.1rem;"></textarea>
+            
+            <div class="loto-controls">
+                <button id="release-lantern-btn" class="loto-action-btn" style="background: linear-gradient(to bottom, #ff9800, #ff5722); color: #fff;">Thả Đèn</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Lời Chúc (Hái Lộc) -->
+    <div id="wish-modal" class="modal-overlay">
+        <div class="wish-modal-content">
+            <span class="close-game" id="close-wish">&times;</span>
+            <h2 style="color: #ffd700; font-family: 'Great Vibes', cursive; font-size: 3.5rem; margin: 10px 0; text-shadow: 2px 2px 0 #8b0000;">Lộc Đầu Xuân</h2>
+            <div style="padding: 20px 0; margin: 20px 0;">
+                <p id="wish-content-text" style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #fff; line-height: 1.4; margin: 0; text-shadow: 1px 1px 2px #000;"></p>
+            </div>
+            <p style="color: #ffd700; font-size: 1.2rem; font-family: 'Times New Roman', serif; margin-top: 20px;">★ Vạn Sự Như Ý ★</p>
+        </div>
+    </div>
+
+    <!-- Khu vực hiển thị đếm ngược -->
+    <div id="countdown-container">
+        <span id="close-countdown" title="Ẩn">&times;</span>
+        <h1 id="title">Sắp đến năm mới</h1>
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span><label>Ngày</label></div>
+            <div class="time-box"><span id="hours">00</span><label>Giờ</label></div>
+            <div class="time-box"><span id="minutes">00</span><label>Phút</label></div>
+            <div class="time-box"><span id="seconds">00</span><label>Giây</label></div>
+        </div>
+        <p id="current-date"></p>
+    </div>
+
+    <!-- Thông báo chúc mừng năm mới -->
+    <h1 id="happy-new-year-msg">HAPPY NEW YEAR!</h1>
+
+    <!-- Nhạc nền: Hãy thay đổi đường dẫn src thành file nhạc của bạn -->
+    <audio id="music" src="happy_new_year.mp3" loop></audio>
+    <!-- Âm thanh khi hiện chữ Phúc (Cần file ting.mp3) -->
+    <audio id="ting-sound" src="ting.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
